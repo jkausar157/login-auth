@@ -54,7 +54,8 @@ export class UserListingComponent {
       }
     });
     popup.afterClosed().subscribe(res=>{
-      console.log(res);
+      // console.log(res);
+      this.LoadUser()
       
     })
   }
