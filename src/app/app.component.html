@@ -72,7 +72,7 @@
   />
   <span style=" margin-right: 20px;">Welcome</span>
   <a routerLink=""  style=" margin-right: 20px;">Home</a>
- <a routerLink="/user">User</a>
+ <a *ngIf="isadminuser" routerLink="/user">User</a>
     <div class="spacer"></div>
     <a routerLink="/login"  style=" margin-right: 20px;">Logout</a>
 </div>

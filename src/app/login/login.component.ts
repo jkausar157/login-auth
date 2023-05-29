@@ -25,7 +25,7 @@ export class LoginComponent {
   userdata: any;
   proceedlogin() {
     if (this.loginform.valid) {
-      this.service.getbycode(this.loginform.value.username).subscribe((res) => {
+      this.service.getbyid(this.loginform.value.username).subscribe((res) => {
         alert("login successfully!!")
         this.userdata = res;
         // console.log(res);

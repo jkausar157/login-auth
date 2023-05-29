@@ -13,11 +13,13 @@ import { UpdatepopupComponent } from '../updatepopup/updatepopup.component';
 })
 export class UserListingComponent {
   constructor(private service: AuthService, private dialog:MatDialog ) {
-    this.LoadUser();
+    this.loadUser();
   }
 
   dataSource: any;
   userlist: any;
+  @ViewChild(MatPaginator)paginator !:MatPaginator;
+  @ViewChild(MatSort)sort !:MatSort;
   displayedColumns: string[] = [
     'username',
     'name',
@@ -27,12 +29,11 @@ export class UserListingComponent {
     'action',
   ];
   
-  @ViewChild(MatPaginator)paginator !:MatPaginator;
-  @ViewChild(MatSort)sort !:MatSort;
-  LoadUser() {
+ 
+  loadUser() {
     this.service.getAll().subscribe((res) => {
       this.userlist = res;
-      console.log(res);
+      // console.log(res);
       this.dataSource = new MatTableDataSource(this.userlist);
       this.dataSource.paginator=this.paginator;
       this.dataSource.sort=this.sort;
@@ -40,24 +41,28 @@ export class UserListingComponent {
   }
 
   UpdateUser(code: any) {
-    this.openDialog('100ms','600ms',code)
-    
-  }
-
-  openDialog(enteranimation:any,exitanimation:any,code:string){
-    const popup = this.dialog.open(UpdatepopupComponent,{
-      enterAnimationDuration:enteranimation,
-      exitAnimationDuration:exitanimation,
-      width:'20%',
+    const popup =   this.dialog.open(UpdatepopupComponent,{
+      enterAnimationDuration:'1000ms',
+      exitAnimationDuration:'500ms',
+      width:'50%',
       data:{
         usercode:code
       }
     });
+    // this.openDialog('100ms','600ms',code)
     popup.afterClosed().subscribe(res=>{
-      // console.log(res);
-      this.LoadUser()
+      this.loadUser();
+    });
+    
+  }
+
+  openDialog(){
+  
+  
+   
+     
       
-    })
+ 
   }
 
 

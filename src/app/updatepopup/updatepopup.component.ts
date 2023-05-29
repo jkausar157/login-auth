@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../service/auth.service';
 import { Router } from '@angular/router';
@@ -10,20 +10,35 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./updatepopup.component.css']
 })
 export class UpdatepopupComponent implements OnInit{
-  data: any;
-  editData: any;
-constructor(private builder: FormBuilder, private service: AuthService, private route: Router,private dialogref:MatDialogRef<UpdatepopupComponent>){}
 
-rolelist:any
+  editData: any;
+  rolelist:any
+constructor(private builder: FormBuilder, private service: AuthService, private route: Router, @Inject(MAT_DIALOG_DATA) public data:any,private dialogref:MatDialogRef<UpdatepopupComponent>){
+  // console.log(this.data.usercode);
+}
+
+
   ngOnInit(): void {
    this.service.getAllRole().subscribe(res=>{
-this.rolelist=res
+    this.rolelist=res
    })
 
    if(this.data.usercode!=null && this.data.usercode!=''){
     this.loaduserdata(this.data.usercode);
+    this.service.getbyid(this.data.usercode).subscribe(res=>{
+      this.editData=res;
+      this.registerform.setValue({
+        id:this.editData.id,name:this.editData.name,
+        password:this.editData.password,
+        email:this.editData.email,
+        gender:this.editData.gender,
+        role:this.editData.role,
+        isactive:this.editData.isactive
+      })
+    })
+ 
+    
    }
-   
    
   }
 
@@ -39,22 +54,31 @@ registerform = this.builder.group({
 });
 
 loaduserdata(code:any){
-  this.service.getbycode(this.data.usercode).subscribe(res=>{
-    this.editData=res;
-    this.registerform.setValue({
-      id:this.editData.id,name:this.editData.name,
-      password:this.editData.password,email:this.editData.email,
-      gender:this.editData.gender,role:this.editData.role,
-      isactive:this.editData.isactive
-    });
-  })
+  
+  // this.service.getbyid(this.data.usercode).subscribe(res=>{
+    
+  //   this.editData=res;
+  //   console.log(res);
+
+  //   this.registerform.setValue({
+  //     id:this.editData.id,name:this.editData.name,
+  //     password:this.editData.password,email:this.editData.email,
+  //     gender:this.editData.gender,role:this.editData.role,
+  //     isactive:this.editData.isactive
+  //   });
+  // })
 }
 
 updateregd(){
- this.service.updateUser(this.registerform.value.id, this.registerform.value).subscribe(res=>{
-  alert("update successfully")
-  this.dialogref.close();
- })
+  if(this.registerform.valid){
+    this.service.updateUser(this.registerform.value.id,this.registerform.value).subscribe(res=>{
+      alert("updated successfully");
+      this.dialogref.close();
+     })
+  }else{
+    alert("please select role!!")
+  }
+
 }
 
 }

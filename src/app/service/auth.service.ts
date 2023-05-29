@@ -15,12 +15,12 @@ export class AuthService {
   }
 
  // get all role
-getAllRole(){
-  return this.http.get("http://localhost:3000/role");
-}
+  getAllRole(){
+    return this.http.get("http://localhost:3000/role");
+  }
 
   // get record by single id
-  getbycode(code:any){
+  getbyid(code:any){
     return this.http.get(this.apiurl+'/'+code)
   }
 
@@ -30,7 +30,7 @@ getAllRole(){
   }
 
   // update user by put method
-  updateUser(inputdata:any,code:any){
+  updateUser(code:any,inputdata:any){
     return this.http.put(this.apiurl+'/'+code,inputdata)
   }
 

@@ -15,7 +15,7 @@
       "email": "admin@gmail.com",
       "password": "Admin@1234",
       "gender": "male",
-      "role": "",
+      "role": "hr",
       "isactive": true
     },
     {
@@ -24,8 +24,8 @@
       "email": "admin1@gmail.com",
       "password": "Admin@1234",
       "gender": "male",
-      "role": "",
-      "isactive": false
+      "role": "hr",
+      "isactive": true
     },
     {
       "id": "admin2",
@@ -53,6 +53,15 @@
       "gender": "male",
       "role": "",
       "isactive": true
+    },
+    {
+      "id": "sweety",
+      "name": "sweety sweety",
+      "email": "sweety123@gmail.com",
+      "password": "Sweety@123",
+      "gender": "female",
+      "role": "tester",
+      "isactive": true
     }
   ],
   "role": [
@@ -71,6 +80,10 @@
     {
       "code": "tele caller",
       "name": "Tele caller"
+    },
+    {
+      "code": "tester",
+      "name": "Tester"
     }
   ]
 }
